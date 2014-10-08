@@ -523,7 +523,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     {
     	return numberOfRed(root, count);
     }
-    public int numberOfRed(Node node,  int count)
+    private int numberOfRed(Node node,  int count)
     {
     	if(node == null)
     	{
@@ -555,19 +555,20 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     *  Test client
     *****************************************************************************/
     
-       public static void main(String[] args) { 
-    	int N = 10000;
-        RedBlackBST<String, Integer> st = new RedBlackBST<String, Integer>();
-        for (int i = 0; i < N; i++) {
-            String key = Integer.toString(StdRandom.uniform(N));
-            st.put(key, i);
-        }
-        int count = 0;
-        count = st.numberOfRed(count);
-        StdOut.println(count);
-        StdOut.println("percentage of red in given tree: " + 100*st.precentageOfRed(count) + "%");
-        
-    }
+	public static void main(String[] args) 
+	{ 
+		int N = 10000;
+		RedBlackBST<String, Integer> st = new RedBlackBST<String, Integer>();
+		for (int i = 0; i < N; i++) 
+		{
+			String key = Integer.toString(StdRandom.uniform(N));
+			st.put(key, i);
+		}
+		int count = 0;
+		count = st.numberOfRed(count);
+		StdOut.println(count);
+		StdOut.println("percentage of red in given tree: " + 100*st.precentageOfRed(count) + "%");
+	}
 }
 
 /*public static void main(String[] args) { 
