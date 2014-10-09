@@ -24,8 +24,10 @@ package d5;
  *
  *************************************************************************/
 
+
 import  edu.princeton.cs.introcs.*;
 import  edu.princeton.cs.algs4.*;
+
 import java.util.NoSuchElementException;
 
 public class BST_D5<Key extends Comparable<Key>, Value> {
@@ -74,9 +76,56 @@ public class BST_D5<Key extends Comparable<Key>, Value> {
 
     public void bringToRoot(Key k)
     {
-        return;
+        root = bringToRoot(root, k);
+    }
+    
+    private Node bringToRoot(Node h, Key k)
+    {
+    	if (h == null) return null;
+    	Node x;
+    	int cmp = k.compareTo(h.key);
+    	if (cmp < 0)
+    	{
+    		h.left = bringToRoot(h.left, k);
+    		h = rotateRight(h);
+    	}
+    	else if (cmp > 0) 
+    	{
+    		h.right = bringToRoot(h.right, k);
+    		h = rotateLeft(h);
+    	}
+    	return h;
+    	
+    	
+    	
+    	
+    }
+    
+    // make a left-leaning link lean to the right
+    private Node rotateRight(Node h) {
+        // assert (h != null) && isRed(h.left);
+        Node x = h.left;
+        h.left = x.right;
+        x.right = h;
+        x.N = h.N;
+        h.N = size(h.left) + size(h.right) + 1;
+        return x;
     }
 
+    // make a right-leaning link lean to the left
+    private Node rotateLeft(Node h) {
+        // assert (h != null) && isRed(h.right);
+        Node x = h.right;
+        h.right = x.left;
+        x.left = h;
+        x.N = h.N;
+        h.N = size(h.left) + size(h.right) + 1;
+        return x;
+    }
+    
+    
+
+    
    /***********************************************************************
     *  Insert key-value pair into BST
     *  If key already exists, update with new value
@@ -257,7 +306,7 @@ public class BST_D5<Key extends Comparable<Key>, Value> {
     public static void main(String[] args) { 
         BST_D5<String, Integer> st = new BST_D5<String, Integer>();
         In in = new In();
-        int N = in.readInt();
+        int N = 1000;
         for (int i = 0; i < N; i++) {
             String key = in.readString();
             int val = in.readInt();
