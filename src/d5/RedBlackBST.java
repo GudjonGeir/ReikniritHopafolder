@@ -557,17 +557,28 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     
 	public static void main(String[] args) 
 	{ 
-		int N = 10000;
-		RedBlackBST<String, Integer> st = new RedBlackBST<String, Integer>();
-		for (int i = 0; i < N; i++) 
+		double[] perc = new double[100];
+		for (int j = 0; j < perc.length; j++)
 		{
-			String key = Integer.toString(StdRandom.uniform(N));
-			st.put(key, i);
+			int N = 10000001;
+			RedBlackBST<String, Integer> st = new RedBlackBST<String, Integer>();
+			for (int i = 0; i < N; i++) 
+			{
+				String key = Integer.toString(StdRandom.uniform(N));
+				st.put(key, i);
+			}
+			int count = 0;
+			count = st.numberOfRed(count);
+			StdOut.println(count);
+			perc[j] = st.precentageOfRed(count);
 		}
-		int count = 0;
-		count = st.numberOfRed(count);
-		StdOut.println(count);
-		StdOut.println("percentage of red in given tree: " + 100*st.precentageOfRed(count) + "%");
+		double total = 0;
+		for (int i = 0; i < perc.length; i++)
+		{
+			total += perc[i];
+		}
+		StdOut.println(total/100);
+		//StdOut.println("percentage of red in given tree: " + 100*st.precentageOfRed(count) + "%");
 	}
 }
 
