@@ -256,10 +256,10 @@ public class KdTree {
     		{
     			close = n.point;
     		}
-    		if(n.left != null && n.left.rect.contains(p))
-    		close = nearest(p, n.left, close);
-    		if(n.right != null && n.right.rect.contains(p))
-    		close = nearest(p, n.right, close);
+    		if(n.left.rect.distanceSquaredTo(p) < p.distanceSquaredTo(close))
+    			close = nearest(p, n.left, close);
+    		if(n.right.rect.distanceSquaredTo(p) < p.distanceSquaredTo(close))
+    			close = nearest(p, n.right, close);
     		return close;
     		/*if(n.axis == VERTICAL){
     			double cmp = Double.compare(p.x(), n.point.x());
@@ -315,17 +315,11 @@ public class KdTree {
      * Test client
      ******************************************************************************/
     public static void main(String[] args) {
-    	Point2D pt = new Point2D(0.496, 0.171);
-    	Point2D pt1 = new Point2D(0.5, 0.19);
-    	Point2D pt2 = new Point2D(0.492, 0.19);
-    	
-    	StdOut.println(pt.distanceSquaredTo(pt2) + " pt2");	
-    	StdOut.println(pt.distanceSquaredTo(pt1) + " pt1");
-    
+
     	//(0.496, 0.171): (0.5, 0.19)
 
     	//(0.496, 0.171): (0.492, 0.19)
-        In in = new In("C:\\Users\\Arni\\Desktop\\Reiknirit\\S3\\packet\\moo.txt\\");
+        In in = new In("C:\\Users\\Arni\\Desktop\\Reiknirit\\S3\\packet\\moo.txt");
         Out out = new Out();
         int nrOfRecangles = in.readInt();
         int nrOfPointsCont = in.readInt();
