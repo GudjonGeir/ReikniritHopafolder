@@ -26,7 +26,7 @@ public class KdTree {
 		private boolean axis;
 		private RectHV rect;
 		
-		public Node(Point2D p, boolean a)
+		public Node(Point2D p, boolean a, RectHV rect)
 		{
 			this.point = p;
 			this.axis = a;
@@ -53,9 +53,8 @@ public class KdTree {
     public void insert(Point2D p) {
     	if(root == null) 
     	{
-    		root = new Node(p, VERTICAL);
     		RectHV rect = new RectHV(0.0, 0.0, 1.0, 1.0);
-    		root.rect = rect;
+    		root = new Node(p, VERTICAL, rect);
     		size++;
     	}
     	else
@@ -75,9 +74,8 @@ public class KdTree {
     		if (cmp < 0) // ef p < 0
 			{
 				if(n.left == null){
-					n.left = new Node(p, HORIZONTAL);		
 					RectHV rect = new RectHV(n.rect.xmin(), n.rect.ymin(), n.rect.xmax(), n.point.y() );
-					n.left.rect = rect;
+					n.left = new Node(p, HORIZONTAL, rect);		
 					size++;
 				}
 				else insert(n.left, p);
@@ -85,9 +83,8 @@ public class KdTree {
     		else
 			{
     			if(n.right == null){
-    				n.right = new Node(p, HORIZONTAL);
-					RectHV rect = new RectHV(n.rect.xmin(), n.point.y(), n.rect.xmax(), n.rect.ymax() );
-					n.right.rect = rect;
+    				RectHV rect = new RectHV(n.rect.xmin(), n.point.y(), n.rect.xmax(), n.rect.ymax() );
+    				n.right = new Node(p, HORIZONTAL, rect);
     				size++;
     			}
 				else insert(n.right, p);
@@ -100,9 +97,9 @@ public class KdTree {
 			{
 				if(n.left == null){
 					size++;
-					n.left = new Node(p, VERTICAL);
 					RectHV rect = new RectHV(n.rect.xmin(), n.rect.ymin(), n.point.x(), n.rect.xmax() );
-					n.left.rect = rect;
+					n.left = new Node(p, VERTICAL, rect);
+					
 				}
 				else insert(n.left, p);
 			}
@@ -110,9 +107,9 @@ public class KdTree {
 			{
     			if(n.right == null){
     				size++;
-    				n.right = new Node(p, VERTICAL);
-					RectHV rect = new RectHV(n.point.x(), n.rect.ymin(), n.rect.xmax(), n.rect.xmax() );
-					n.right.rect = rect;
+    				RectHV rect = new RectHV(n.point.x(), n.rect.ymin(), n.rect.xmax(), n.rect.xmax() );
+    				n.right = new Node(p, VERTICAL, rect);
+	
     			}
 				else insert(n.right, p);
 			}
