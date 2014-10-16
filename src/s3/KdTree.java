@@ -256,9 +256,9 @@ public class KdTree {
     		{
     			close = n.point;
     		}
-    		if(n.left.rect.distanceSquaredTo(p) < p.distanceSquaredTo(close))
+    		if(n.left != null && n.left.rect.distanceSquaredTo(p) < p.distanceSquaredTo(close))
     			close = nearest(p, n.left, close);
-    		if(n.right.rect.distanceSquaredTo(p) < p.distanceSquaredTo(close))
+    		if(n.right != null && n.right.rect.distanceSquaredTo(p) < p.distanceSquaredTo(close))
     			close = nearest(p, n.right, close);
     		return close;
     		/*if(n.axis == VERTICAL){
