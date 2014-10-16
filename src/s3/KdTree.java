@@ -58,10 +58,30 @@ public class KdTree {
     {
     	if(n.axis == VERTICAL)
     	{
-    		double cmp <
-    		if (Double.compare(d1, d2)n.point.x())
+    		double cmp = Double.compare(p.x(), n.point.x());
+    		if (cmp < 0) // ef p < 0
 			{
-				
+				if(n.left == null) n.left = new Node(p, HORIZONTAL);
+				else insert(n.left, p);
+			}
+    		else
+			{
+    			if(n.right == null) n.right = new Node(p, HORIZONTAL);
+				else insert(n.right, p);
+			}
+    	}
+    	else
+    	{
+    		double cmp = Double.compare(p.y(), n.point.y());
+    		if (cmp < 0) // ef p < 0
+			{
+				if(n.left == null) n.left = new Node(p, VERTICAL);
+				else insert(n.left, p);
+			}
+    		else
+			{
+    			if(n.right == null) n.right = new Node(p, VERTICAL);
+				else insert(n.right, p);
 			}
     	}
     }
