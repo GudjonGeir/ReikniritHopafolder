@@ -74,7 +74,7 @@ public class KdTree {
     		if (cmp < 0) // ef p < 0
 			{
 				if(n.left == null){
-					RectHV rect = new RectHV(n.rect.xmin(), n.rect.ymin(), n.rect.xmax(), n.point.y() );
+					RectHV rect = new RectHV(n.rect.xmin(), n.rect.ymin(), n.point.x(), n.rect.ymax() );
 					n.left = new Node(p, HORIZONTAL, rect);		
 					size++;
 				}
@@ -83,7 +83,7 @@ public class KdTree {
     		else
 			{
     			if(n.right == null){
-    				RectHV rect = new RectHV(n.rect.xmin(), n.point.y(), n.rect.xmax(), n.rect.ymax() );
+    				RectHV rect = new RectHV(n.point.x(), n.rect.ymin(), n.rect.xmax(), n.rect.ymax() );
     				n.right = new Node(p, HORIZONTAL, rect);
     				size++;
     			}
@@ -97,7 +97,7 @@ public class KdTree {
 			{
 				if(n.left == null){
 					size++;
-					RectHV rect = new RectHV(n.rect.xmin(), n.rect.ymin(), n.point.x(), n.rect.xmax() );
+					RectHV rect = new RectHV(n.rect.xmin(), n.rect.ymin(), n.rect.xmax(), n.point.y());
 					n.left = new Node(p, VERTICAL, rect);
 					
 				}
@@ -107,7 +107,7 @@ public class KdTree {
 			{
     			if(n.right == null){
     				size++;
-    				RectHV rect = new RectHV(n.point.x(), n.rect.ymin(), n.rect.xmax(), n.rect.xmax() );
+    				RectHV rect = new RectHV(n.rect.xmin(), n.point.y(), n.rect.xmax(), n.rect.ymax());
     				n.right = new Node(p, VERTICAL, rect);
 	
     			}
