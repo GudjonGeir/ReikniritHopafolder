@@ -4,5 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/Users/GGJ/Eclipse workspace/algs4/algs4-package.jar"/>
 	<classpathentry kind="lib" path="/Users/GGJ/Eclipse workspace/algs4/stdlib-package.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Arni/Documents/GitHub/ReikniritHopafolder/lib/algs4-package.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Arni/Documents/GitHub/ReikniritHopafolder/lib/stdlib-package.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
