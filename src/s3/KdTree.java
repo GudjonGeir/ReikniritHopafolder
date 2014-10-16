@@ -5,6 +5,7 @@ package s3;
 import java.util.Arrays;
 
 import edu.princeton.cs.algs4.Point2D;
+import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.introcs.Out;
 
@@ -139,7 +140,45 @@ public class KdTree {
 
     // all points in the set that are inside the rectangle
     public Iterable<Point2D> range(RectHV rect) {
-        return null;
+    	SET<Point2D> ptset = new SET<Point2D>();
+        ptset = range(rect, root, ptset);
+        return ptset;
+    }
+    
+    private SET<Point2D> range(RectHV rect, Node n, SET<Point2D> ptset)
+    {
+    	if(n == null)
+    	{
+    		return null;
+    	}
+    	else if((Double.compare((rect.xmin()),(n.point.x())) <= 0 && Double.compare(rect.xmax(), n.point.x()) >= 0) 
+    			&& (Double.compare(rect.ymin(), n.point.y()) <= 0 && Double.compare(rect.ymax(), n.point.y()) >= 0))
+    		{
+			ptset.add(n.point);
+    		}
+		else if(n.axis == VERTICAL)
+		{
+			if(Double.compare(n.left.point.x(), rect.xmax()) <= 0 && Double.compare(n.left.point.x(), rect.xmin()) >= 0 )
+			{
+				range(rect, n.left, ptset);
+			}
+			else if(Double.compare(n.right.point.x(), rect.xmax()) <= 0 && Double.compare(n.right.point.x(), rect.xmin()) >= 0 )
+			{
+				range(rect, n.right, ptset);
+			}
+		}
+		else if(n.axis == HORIZONTAL)
+		{
+			if(Double.compare(n.left.point.y(), rect.ymax()) <= 0 && Double.compare(n.left.point.y(), rect.ymin()) >= 0 )
+			{
+				range(rect, n.left, ptset);
+			}
+			else if(Double.compare(n.right.point.y(), rect.ymax()) <= 0 && Double.compare(n.right.point.y(), rect.ymin()) >= 0 )
+			{
+				range(rect, n.right, ptset);
+			}
+		}
+    	return ptset;
     }
 
     // a nearest neighbor in the set to p; null if set is empty
