@@ -30,6 +30,7 @@ public class KdTree {
 		{
 			this.point = p;
 			this.axis = a;
+			this.rect = rect;
 		}
 	}
 	
