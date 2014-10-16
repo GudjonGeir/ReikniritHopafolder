@@ -56,7 +56,14 @@ public class KdTree {
     
     private void insert(Node n, Point2D p)
     {
-    	
+    	if(n.axis == VERTICAL)
+    	{
+    		double cmp <
+    		if (Double.compare(d1, d2)n.point.x())
+			{
+				
+			}
+    	}
     }
 
     // does the set contain the point p?
