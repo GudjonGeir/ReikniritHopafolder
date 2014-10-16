@@ -88,7 +88,48 @@ public class KdTree {
 
     // does the set contain the point p?
     public boolean contains(Point2D p) {
-        return false;
+    	if(root == null) return false;
+        if(root.point.equals(p))) return true;
+        return contains(root, p);
+    }
+    
+    private boolean contains(Node n, Point2D p)
+    {
+    	if(n.axis == VERTICAL)
+    	{
+    		double cmp = Double.compare(p.x(), n.point.x());
+    		if (cmp < 0) // ef p < 0
+			{
+				if(n.left == null) return false;
+				else return contains(n.left, p);
+				
+			}
+    		else if(cmp > 0)
+			{
+    			if(n.right == null) return false;
+				else return contains (n.right, p);
+			}
+    		else if(n.point.equals(p))
+    			return true;
+    		else return false;
+    	}
+    	else
+    	{
+    		double cmp = Double.compare(p.y(), n.point.y());
+    		if (cmp < 0) // ef p < 0
+			{
+				if(n.left == null) return false;
+				else return contains(n.left, p);
+			}
+    		else if(cmp > 0)
+			{
+    			if(n.right == null) return false;
+				else return contains(n.right, p);
+			}
+    		else if(n.point.equals(p))
+    			return true;
+    		else return false;
+    	}
     }
 
     // draw all of the points to standard draw
