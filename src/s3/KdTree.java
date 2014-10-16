@@ -89,7 +89,7 @@ public class KdTree {
     // does the set contain the point p?
     public boolean contains(Point2D p) {
     	if(root == null) return false;
-        if(root.point.equals(p))) return true;
+        if(root.point.equals(p)) return true;
         return contains(root, p);
     }
     
