@@ -61,13 +61,17 @@ public class KdTree {
     
     private void insert(Node n, Point2D p)
     {
+    	if(n.point.equals(p))
+    	{
+    		return;
+    	}
     	if(n.axis == VERTICAL)
     	{
     		double cmp = Double.compare(p.x(), n.point.x());
     		if (cmp < 0) // ef p < 0
 			{
 				if(n.left == null){
-					n.left = new Node(p, HORIZONTAL);
+					n.left = new Node(p, HORIZONTAL);				
 					size++;
 				}
 				else insert(n.left, p);
@@ -229,8 +233,24 @@ public class KdTree {
 
     // a nearest neighbor in the set to p; null if set is empty
     public Point2D nearest(Point2D p) {
+    	
         return p;
     }
+    /*public Point2D nearest(Point2D p) {
+    	if(ptset.isEmpty())
+    	{
+    		return null;
+    	}
+    	Point2D close = new Point2D(9,9);
+    	for(Point2D iter : ptset){
+    		if(p.distanceSquaredTo(iter) < p.distanceSquaredTo(close))
+    		{
+    			close = iter;
+    		}
+    	}
+        return close;
+    }*/
+
 
     /*******************************************************************************
      * Test client
