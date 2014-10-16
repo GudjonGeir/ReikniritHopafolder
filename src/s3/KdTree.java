@@ -49,7 +49,10 @@ public class KdTree {
     // add the point p to the set (if it is not already in the set)
     public void insert(Point2D p) {
     	if(root == null) 
+    	{
     		root = new Node(p, VERTICAL);
+    		size++;
+    	}
     	else
     		insert(root, p);
     	
@@ -62,12 +65,18 @@ public class KdTree {
     		double cmp = Double.compare(p.x(), n.point.x());
     		if (cmp < 0) // ef p < 0
 			{
-				if(n.left == null) n.left = new Node(p, HORIZONTAL);
+				if(n.left == null){
+					n.left = new Node(p, HORIZONTAL);
+					size++;
+				}
 				else insert(n.left, p);
 			}
     		else
 			{
-    			if(n.right == null) n.right = new Node(p, HORIZONTAL);
+    			if(n.right == null){
+    				n.right = new Node(p, HORIZONTAL);
+    				size++;
+    			}
 				else insert(n.right, p);
 			}
     	}
@@ -76,12 +85,18 @@ public class KdTree {
     		double cmp = Double.compare(p.y(), n.point.y());
     		if (cmp < 0) // ef p < 0
 			{
-				if(n.left == null) n.left = new Node(p, VERTICAL);
+				if(n.left == null){
+					size++;
+					n.left = new Node(p, VERTICAL);
+				}
 				else insert(n.left, p);
 			}
     		else
 			{
-    			if(n.right == null) n.right = new Node(p, VERTICAL);
+    			if(n.right == null){
+    				size++;
+    				n.right = new Node(p, VERTICAL);
+    			}
 				else insert(n.right, p);
 			}
     	}
