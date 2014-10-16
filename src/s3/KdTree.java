@@ -87,8 +87,6 @@ public class KdTree {
     			if(n.right == null){
     				n.right = new Node(p, HORIZONTAL);
 					RectHV rect = new RectHV(n.rect.xmin(), n.point.y(), n.rect.xmax(), n.rect.ymax() );
-					rect = n.rect;
-					rect.
 					n.right.rect = rect;
     				size++;
     			}
