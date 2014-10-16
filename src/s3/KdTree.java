@@ -9,6 +9,7 @@ import edu.princeton.cs.algs4.SET;
 import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.introcs.Out;
 import edu.princeton.cs.introcs.StdDraw;
+import edu.princeton.cs.introcs.StdOut;
 
 public class KdTree {
 	private static final boolean HORIZONTAL   = true;
@@ -23,6 +24,7 @@ public class KdTree {
 		private Point2D point;
 		private Node left, right;
 		private boolean axis;
+		private RectHV rect;
 		
 		public Node(Point2D p, boolean a)
 		{
@@ -52,6 +54,8 @@ public class KdTree {
     	if(root == null) 
     	{
     		root = new Node(p, VERTICAL);
+    		RectHV rect = new RectHV(0.0, 0.0, 1.0, 1.0);
+    		root.rect = rect;
     		size++;
     	}
     	else
@@ -71,7 +75,9 @@ public class KdTree {
     		if (cmp < 0) // ef p < 0
 			{
 				if(n.left == null){
-					n.left = new Node(p, HORIZONTAL);				
+					n.left = new Node(p, HORIZONTAL);		
+					RectHV rect = new RectHV(n.rect.xmin(), n.rect.ymin(), n.rect.xmax(), n.point.y() );
+					n.left.rect = rect;
 					size++;
 				}
 				else insert(n.left, p);
@@ -80,6 +86,8 @@ public class KdTree {
 			{
     			if(n.right == null){
     				n.right = new Node(p, HORIZONTAL);
+					RectHV rect = new RectHV(n.rect.xmin(), n.point.y(), n.rect.xmax(), n.rect.ymax() );
+					n.right.rect = rect;
     				size++;
     			}
 				else insert(n.right, p);
@@ -93,6 +101,8 @@ public class KdTree {
 				if(n.left == null){
 					size++;
 					n.left = new Node(p, VERTICAL);
+					RectHV rect = new RectHV(n.rect.xmin(), n.rect.ymin(), n.point.x(), n.rect.xmax() );
+					n.left.rect = rect;
 				}
 				else insert(n.left, p);
 			}
@@ -101,6 +111,8 @@ public class KdTree {
     			if(n.right == null){
     				size++;
     				n.right = new Node(p, VERTICAL);
+					RectHV rect = new RectHV(n.point.x(), n.rect.ymin(), n.rect.xmax(), n.rect.xmax() );
+					n.right.rect = rect;
     			}
 				else insert(n.right, p);
 			}
@@ -235,8 +247,53 @@ public class KdTree {
 
     // a nearest neighbor in the set to p; null if set is empty
     public Point2D nearest(Point2D p) {
-    	
-        return p;
+    	Point2D close = new Point2D(9,9);
+        close = nearest(p, root, close);
+        return close;
+    }
+    
+    private Point2D nearest(Point2D p, Node n, Point2D close){
+    	if(n == null){
+    		return close;
+    	}
+    	else{
+    		if(p.distanceSquaredTo(n.point) <= p.distanceSquaredTo(close))
+    		{
+    			close = n.point;
+    		}
+    		if(n.axis == VERTICAL){
+    			double cmp = Double.compare(p.x(), n.point.x());
+        		if (cmp < 0) // ef p < 0
+    			{
+    				if(n.left == null) return close;
+    				else return nearest(p, n.left, close);
+    				
+    			}
+        		else
+    			{
+        			if(n.right == null) return close;
+    				else return nearest(p, n.right, close);
+    			}
+    		}
+    		else{
+    			if(p.distanceSquaredTo(n.point) <= p.distanceSquaredTo(close))
+    			{
+    				close = n.point;
+    			}
+    			double cmp = Double.compare(p.y(), n.point.y());
+        		if (cmp < 0) // ef p < 0
+    			{
+    				if(n.left == null) return close;
+    				else return nearest(p, n.left, close);
+    				
+    			}
+        		else
+    			{
+        			if(n.right == null) return close;
+    				else return nearest(p, n.right, close);
+    			}
+    		}
+    	}
     }
     /*public Point2D nearest(Point2D p) {
     	if(ptset.isEmpty())
@@ -258,6 +315,14 @@ public class KdTree {
      * Test client
      ******************************************************************************/
     public static void main(String[] args) {
+    	Point2D pt1 = new Point2D(0.897,0.422);
+    	Point2D pt2 = new Point2D(0.798, 0.429);
+    	Point2D pt3 = new Point2D(0.9, 0.448);
+    	
+    	StdOut.println(pt1.distanceSquaredTo(pt2));
+    	StdOut.println(pt1.distanceSquaredTo(pt3));
+    	//(0.897, 0.422): (0.798, 0.429)
+    	//(0.897, 0.422): (0.9, 0.448)
         In in = new In();
         Out out = new Out();
 //        int nrOfRecangles = in.readInt();
