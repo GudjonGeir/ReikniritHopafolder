@@ -112,6 +112,8 @@ public class KdTree {
     
     private boolean contains(Node n, Point2D p)
     {
+    	if(n.point.equals(p))
+			return true;
     	if(n.axis == VERTICAL)
     	{
     		double cmp = Double.compare(p.x(), n.point.x());
@@ -121,14 +123,12 @@ public class KdTree {
 				else return contains(n.left, p);
 				
 			}
-    		else if(cmp > 0)
+    		else
 			{
     			if(n.right == null) return false;
 				else return contains (n.right, p);
 			}
-    		else if(n.point.equals(p))
-    			return true;
-    		else return false;
+    		
     	}
     	else
     	{
@@ -138,14 +138,12 @@ public class KdTree {
 				if(n.left == null) return false;
 				else return contains(n.left, p);
 			}
-    		else if(cmp > 0)
+    		else
 			{
     			if(n.right == null) return false;
 				else return contains(n.right, p);
 			}
-    		else if(n.point.equals(p))
-    			return true;
-    		else return false;
+
     	}
     }
 
