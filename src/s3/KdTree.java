@@ -163,39 +163,43 @@ public class KdTree {
 
     // draw all of the points to standard draw
     public void draw() {
-    	double max_x = 1;
-    	double min_x = 0;
-    	double max_y = 1;
-    	double min_y = 0;
-    	draw(root, max_x, min_x, max_y, min_y, VERTICAL);
+    	StdDraw.setPenRadius(0.002);
+    	StdDraw.line(0, 1, 1, 1);
+    	StdDraw.line(0, 0, 1, 0);
+    	StdDraw.line(0, 1, 0, 0);
+    	StdDraw.line(1, 0, 1, 1);
+    	draw(root);
+    	
     	
     }
     
-    private void draw(Node n, double max_x, double min_x, double max_y, double min_y, boolean axis)
+    private void draw(Node n)
     {
-    	if(axis == VERTICAL)
+    	if(n.axis == VERTICAL)
     	{
     		StdDraw.setPenColor(StdDraw.RED);
-    		StdDraw.setPenRadius(0.007);
-    		n.point.drawTo(new Point2D(n.point.x(), max_y));
-    		n.point.drawTo(new Point2D(n.point.x(), min_y));
+    		StdDraw.setPenRadius(0.004);
+    		StdDraw.line(n.point.x(), n.rect.ymax(), n.point.x(), n.rect.ymin());
+    		//n.point.drawTo(new Point2D(n.point.x(), n.rect.ymax()));
+    		//n.point.drawTo(new Point2D(n.point.x(), n.rect.ymin()));
     		StdDraw.setPenColor(StdDraw.BLACK);
     		StdDraw.setPenRadius(0.01);
     		n.point.draw();
-    		if(n.left != null) draw(n.left, n.point.x(), min_x, max_y, min_y, !axis);
-    		if(n.right != null) draw(n.right, max_x, n.point.x(), max_y, min_y, !axis);
+    		if(n.left != null) draw(n.left);
+    		if(n.right != null) draw(n.right);
     	}
     	else
     	{
     		StdDraw.setPenColor(StdDraw.BLUE);
-    		StdDraw.setPenRadius(0.007);
-    		n.point.drawTo(new Point2D(max_x, n.point.y()));
-    		n.point.drawTo(new Point2D(min_x, n.point.y()));
+    		StdDraw.setPenRadius(0.004);
+    		StdDraw.line(n.rect.xmax(), n.point.y(), n.rect.xmin(), n.point.y());
+//    		n.point.drawTo(new Point2D(n.rect.xmax(), n.point.y()));
+//    		n.point.drawTo(new Point2D(n.rect.ymax(), n.point.y()));
     		StdDraw.setPenColor(StdDraw.BLACK);
     		StdDraw.setPenRadius(0.01);
     		n.point.draw();
-    		if(n.left != null) draw(n.left, max_x, min_x, n.point.y(), min_y, !axis);
-    		if(n.right != null) draw(n.right, max_x, n.point.x(), max_y, n.point.x(), !axis);
+    		if(n.left != null) draw(n.left);
+    		if(n.right != null) draw(n.right);
     	}
     	
     }
@@ -219,7 +223,7 @@ public class KdTree {
     	double ymincomp = Double.compare(n.point.y(), rect.ymin());
     	double ymaxcomp = Double.compare(rect.ymax(), n.point.y());
     	
-    	if (xmincomp < 0 && xmaxcomp < 0 && ymincomp < 0 && ymaxcomp < 0) 
+    	if (xmincomp >= 0 && xmaxcomp >= 0 && ymincomp >= 0 && ymaxcomp >= 0) 
     		ptset.add(n.point);
 
     	
@@ -237,33 +241,6 @@ public class KdTree {
     		if(ymaxcomp >= 0)
     			ptset = range(rect, n.right, ptset);
     	}
-//    	else if((Double.compare((rect.xmin()),(n.point.x())) <= 0 && Double.compare(rect.xmax(), n.point.x()) >= 0) 
-//    			&& (Double.compare(rect.ymin(), n.point.y()) <= 0 && Double.compare(rect.ymax(), n.point.y()) >= 0))
-//    		{
-//			ptset.add(n.point);
-//    		}
-//		else if(n.axis == VERTICAL)
-//		{
-//			if(Double.compare(n.left.point.x(), rect.xmax()) <= 0 && Double.compare(n.left.point.x(), rect.xmin()) >= 0 )
-//			{
-//				range(rect, n.left, ptset);
-//			}
-//			else if(Double.compare(n.right.point.x(), rect.xmax()) <= 0 && Double.compare(n.right.point.x(), rect.xmin()) >= 0 )
-//			{
-//				range(rect, n.right, ptset);
-//			}
-//		}
-//		else if(n.axis == HORIZONTAL)
-//		{
-//			if(Double.compare(n.left.point.y(), rect.ymax()) <= 0 && Double.compare(n.left.point.y(), rect.ymin()) >= 0 )
-//			{
-//				range(rect, n.left, ptset);
-//			}
-//			else if(Double.compare(n.right.point.y(), rect.ymax()) <= 0 && Double.compare(n.right.point.y(), rect.ymin()) >= 0 )
-//			{
-//				range(rect, n.right, ptset);
-//			}
-//		}
     	return ptset;
     }
 
