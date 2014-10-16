@@ -209,37 +209,61 @@ public class KdTree {
     
     private SET<Point2D> range(RectHV rect, Node n, SET<Point2D> ptset)
     {
-    	if(n == null)
+    	if(n == null || !rect.intersects(n.rect))
     	{
-    		return null;
+    		return ptset;
     	}
-    	else if((Double.compare((rect.xmin()),(n.point.x())) <= 0 && Double.compare(rect.xmax(), n.point.x()) >= 0) 
-    			&& (Double.compare(rect.ymin(), n.point.y()) <= 0 && Double.compare(rect.ymax(), n.point.y()) >= 0))
-    		{
-			ptset.add(n.point);
-    		}
-		else if(n.axis == VERTICAL)
-		{
-			if(Double.compare(n.left.point.x(), rect.xmax()) <= 0 && Double.compare(n.left.point.x(), rect.xmin()) >= 0 )
-			{
-				range(rect, n.left, ptset);
-			}
-			else if(Double.compare(n.right.point.x(), rect.xmax()) <= 0 && Double.compare(n.right.point.x(), rect.xmin()) >= 0 )
-			{
-				range(rect, n.right, ptset);
-			}
-		}
-		else if(n.axis == HORIZONTAL)
-		{
-			if(Double.compare(n.left.point.y(), rect.ymax()) <= 0 && Double.compare(n.left.point.y(), rect.ymin()) >= 0 )
-			{
-				range(rect, n.left, ptset);
-			}
-			else if(Double.compare(n.right.point.y(), rect.ymax()) <= 0 && Double.compare(n.right.point.y(), rect.ymin()) >= 0 )
-			{
-				range(rect, n.right, ptset);
-			}
-		}
+    	
+    	double xmincomp = Double.compare(n.point.x(), rect.xmin());
+    	double xmaxcomp = Double.compare(rect.xmax(), n.point.x());
+    	double ymincomp = Double.compare(n.point.y(), rect.ymin());
+    	double ymaxcomp = Double.compare(rect.ymax(), n.point.y());
+    	
+    	if (xmincomp < 0 && xmaxcomp < 0 && ymincomp < 0 && ymaxcomp < 0) 
+    		ptset.add(n.point);
+
+    	
+    	if (n.axis == VERTICAL)
+    	{
+    		if(xmincomp >= 0)
+    			ptset = range(rect, n.left, ptset);
+    		if(xmaxcomp >= 0)
+    			ptset = range(rect, n.right, ptset);
+    	}
+    	else
+    	{
+    		if(ymincomp >= 0)
+    			ptset = range(rect, n.left, ptset);
+    		if(ymaxcomp >= 0)
+    			ptset = range(rect, n.right, ptset);
+    	}
+//    	else if((Double.compare((rect.xmin()),(n.point.x())) <= 0 && Double.compare(rect.xmax(), n.point.x()) >= 0) 
+//    			&& (Double.compare(rect.ymin(), n.point.y()) <= 0 && Double.compare(rect.ymax(), n.point.y()) >= 0))
+//    		{
+//			ptset.add(n.point);
+//    		}
+//		else if(n.axis == VERTICAL)
+//		{
+//			if(Double.compare(n.left.point.x(), rect.xmax()) <= 0 && Double.compare(n.left.point.x(), rect.xmin()) >= 0 )
+//			{
+//				range(rect, n.left, ptset);
+//			}
+//			else if(Double.compare(n.right.point.x(), rect.xmax()) <= 0 && Double.compare(n.right.point.x(), rect.xmin()) >= 0 )
+//			{
+//				range(rect, n.right, ptset);
+//			}
+//		}
+//		else if(n.axis == HORIZONTAL)
+//		{
+//			if(Double.compare(n.left.point.y(), rect.ymax()) <= 0 && Double.compare(n.left.point.y(), rect.ymin()) >= 0 )
+//			{
+//				range(rect, n.left, ptset);
+//			}
+//			else if(Double.compare(n.right.point.y(), rect.ymax()) <= 0 && Double.compare(n.right.point.y(), rect.ymin()) >= 0 )
+//			{
+//				range(rect, n.right, ptset);
+//			}
+//		}
     	return ptset;
     }
 
