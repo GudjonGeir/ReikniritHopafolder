@@ -7,6 +7,7 @@ import java.util.Arrays;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.introcs.Out;
+import edu.princeton.cs.introcs.StdDraw;
 
 public class KdTree {
 	private static final boolean HORIZONTAL   = true;
@@ -134,7 +135,37 @@ public class KdTree {
 
     // draw all of the points to standard draw
     public void draw() {
-
+    	double max_x = 1;
+    	double min_x = 0;
+    	double max_y = 1;
+    	double min_y = 0;
+    	draw(root, max_x, min_x, max_y, min_y, VERTICAL);
+    	
+    }
+    
+    private void draw(Node n, double max_x, double min_x, double max_y, double min_y, boolean axis)
+    {
+    	if(axis = VERTICAL)
+    	{
+    		StdDraw.setPenColor(StdDraw.BLACK);
+    		n.point.draw();
+    		StdDraw.setPenColor(StdDraw.RED);
+    		n.point.drawTo(new Point2D(max_x, n.point.y()));
+    		n.point.drawTo(new Point2D(min_x, n.point.x()));
+    		draw(n.left, n.point.x(), min_x, max_y, min_y, !axis);
+    		draw(n.right, max_x, n.point.x(), max_y, min_y, !axis);
+    	}
+    	else
+    	{
+    		StdDraw.setPenColor(StdDraw.BLACK);
+    		n.point.draw();
+    		StdDraw.setPenColor(StdDraw.BLUE);
+    		n.point.drawTo(new Point2D(n.point.x(), max_y));
+    		n.point.drawTo(new Point2D(n.point.x(), min_y));
+    		draw(n.left, max_x, min_x, n.point.y(), min_y, !axis);
+    		draw(n.right, max_x, n.point.x(), max_y, n.point.x(), !axis);
+    	}
+    	
     }
 
     // all points in the set that are inside the rectangle
