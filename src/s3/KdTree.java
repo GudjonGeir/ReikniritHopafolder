@@ -231,8 +231,53 @@ public class KdTree {
 
     // a nearest neighbor in the set to p; null if set is empty
     public Point2D nearest(Point2D p) {
-    	
-        return p;
+    	Point2D close = new Point2D(9,9);
+        close = nearest(p, root, close);
+        return close;
+    }
+    
+    private Point2D nearest(Point2D p, Node n, Point2D close){
+    	if(n == null){
+    		return close;
+    	}
+    	else{
+    		if(p.distanceSquaredTo(n.point) < p.distanceSquaredTo(close))
+    		{
+    			close = n.point;
+    		}
+    		if(n.axis == VERTICAL){
+    			double cmp = Double.compare(p.x(), n.point.x());
+        		if (cmp < 0) // ef p < 0
+    			{
+    				if(n.left == null) return close;
+    				else return nearest(p, n.left, close);
+    				
+    			}
+        		else
+    			{
+        			if(n.right == null) return close;
+    				else return nearest(p, n.right, close);
+    			}
+    		}
+    		else{
+    			if(p.distanceSquaredTo(n.point) < p.distanceSquaredTo(close))
+    			{
+    				close = n.point;
+    			}
+    			double cmp = Double.compare(p.y(), n.point.y());
+        		if (cmp < 0) // ef p < 0
+    			{
+    				if(n.left == null) return close;
+    				else return nearest(p, n.left, close);
+    				
+    			}
+        		else
+    			{
+        			if(n.right == null) return close;
+    				else return nearest(p, n.right, close);
+    			}
+    		}
+    	}
     }
     /*public Point2D nearest(Point2D p) {
     	if(ptset.isEmpty())
