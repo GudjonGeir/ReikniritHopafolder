@@ -1,4 +1,4 @@
-
+package s3;
 /*************************************************************************
  *************************************************************************/
 
@@ -9,23 +9,62 @@ import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.introcs.Out;
 
 public class KdTree {
-    // construct an empty set of points
+	private static final boolean HORIZONTAL   = true;
+    private static final boolean VERTICAL = false;
+    
+    private Node root;
+    private int size;
+    
+	
+	private class Node
+	{
+		private Point2D point;
+		private Node left, right;
+		private boolean axis;
+		
+		public Node(Point2D p, boolean a)
+		{
+			this.point = p;
+			this.axis = a;
+		}
+	}
+	
+	// construct an empty set of points
     public KdTree() {
+    	root = null;
+    	size = 0;
     }
 
     // is the set empty?
     public boolean isEmpty() {
-        return false;
+        return root == null;
     }
 
     // number of points in the set
     public int size() {
-        return 0;
+        return size;
     }
 
     // add the point p to the set (if it is not already in the set)
     public void insert(Point2D p) {
+    	if(root == null) 
+    		root = new Node(p, VERTICAL);
+    	else
+    		insert(root, p);
+    	
     };
+    
+    private void insert(Node n, Point2D p)
+    {
+    	if(n.axis == VERTICAL)
+    	{
+    		double cmp <
+    		if (Double.compare(d1, d2)n.point.x())
+			{
+				
+			}
+    	}
+    }
 
     // does the set contain the point p?
     public boolean contains(Point2D p) {
