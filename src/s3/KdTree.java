@@ -180,8 +180,6 @@ public class KdTree {
     		StdDraw.setPenColor(StdDraw.RED);
     		StdDraw.setPenRadius(0.004);
     		StdDraw.line(n.point.x(), n.rect.ymax(), n.point.x(), n.rect.ymin());
-    		//n.point.drawTo(new Point2D(n.point.x(), n.rect.ymax()));
-    		//n.point.drawTo(new Point2D(n.point.x(), n.rect.ymin()));
     		StdDraw.setPenColor(StdDraw.BLACK);
     		StdDraw.setPenRadius(0.01);
     		n.point.draw();
@@ -193,8 +191,6 @@ public class KdTree {
     		StdDraw.setPenColor(StdDraw.BLUE);
     		StdDraw.setPenRadius(0.004);
     		StdDraw.line(n.rect.xmax(), n.point.y(), n.rect.xmin(), n.point.y());
-//    		n.point.drawTo(new Point2D(n.rect.xmax(), n.point.y()));
-//    		n.point.drawTo(new Point2D(n.rect.ymax(), n.point.y()));
     		StdDraw.setPenColor(StdDraw.BLACK);
     		StdDraw.setPenRadius(0.01);
     		n.point.draw();
