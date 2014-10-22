@@ -6,10 +6,12 @@ import java.util.Arrays;
 
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.SET;
+import edu.princeton.cs.algs4.Stopwatch;
 import edu.princeton.cs.introcs.In;
 import edu.princeton.cs.introcs.Out;
 import edu.princeton.cs.introcs.StdDraw;
 import edu.princeton.cs.introcs.StdOut;
+import edu.princeton.cs.introcs.StdRandom;
 
 public class KdTree {
 	private static final boolean HORIZONTAL   = true;
@@ -261,65 +263,28 @@ public class KdTree {
     		if(n.right != null && n.right.rect.distanceSquaredTo(p) < p.distanceSquaredTo(close))
     			close = nearest(p, n.right, close);
     		return close;
-    		/*if(n.axis == VERTICAL){
-    			double cmp = Double.compare(p.x(), n.point.x());
-        		if (cmp < 0) // ef p < 0
-    			{
-    				if(n.left == null) return nearest(p, n.right, close);
-    				else return nearest(p, n.left, close);
-    				
-    			}
-        		else
-    			{
-        			if(n.right == null) return nearest(p, n.left, close);
-    				else return nearest(p, n.right, close);
-    			}
-    		}
-    		else{
-    			if(p.distanceSquaredTo(n.point) <= p.distanceSquaredTo(close))
-    			{
-    				close = n.point;
-    			}
-    			double cmp = Double.compare(p.y(), n.point.y());
-        		if (cmp < 0) // ef p < 0
-    			{
-    				if(n.left == null) return nearest(p, n.right, close);
-    				else return nearest(p, n.left, close);
-    				
-    			}
-        		else
-    			{
-        			if(n.right == null) return nearest(p, n.left, close);
-    				else return nearest(p, n.right, close);
-    			}
-    		}*/
     	}
     }
-    /*public Point2D nearest(Point2D p) {
-    	if(ptset.isEmpty())
-    	{
-    		return null;
-    	}
-    	Point2D close = new Point2D(9,9);
-    	for(Point2D iter : ptset){
-    		if(p.distanceSquaredTo(iter) < p.distanceSquaredTo(close))
-    		{
-    			close = iter;
-    		}
-    	}
-        return close;
-    }*/
 
 
     /*******************************************************************************
      * Test client
      ******************************************************************************/
     public static void main(String[] args) {
-
-    	//(0.496, 0.171): (0.5, 0.19)
+    	KdTree set2 = new KdTree();
+    	int N = 10000;
+    	for(int j = 0; j < 100; j++)
+    	{
+    		Stopwatch sw = new Stopwatch();
+    		for(int i = 0; i < N; i++)
+    		{
+    			set2.insert(new Point2D(StdRandom.uniform(1), StdRandom.uniform(1)));
+    		}
+    		StdOut.println(sw.elapsedTime());
+    	}//(0.496, 0.171): (0.5, 0.19)
 
     	//(0.496, 0.171): (0.492, 0.19)
-        In in = new In("C:\\Users\\Arni\\Desktop\\Reiknirit\\S3\\packet\\moo.txt");
+        /*In in = new In("C:\\Users\\Arni\\Desktop\\Reiknirit\\S3\\packet\\moo.txt");
         Out out = new Out();
         int nrOfRecangles = in.readInt();
         int nrOfPointsCont = in.readInt();
@@ -371,5 +336,5 @@ public class KdTree {
         set.draw();
 
         out.println();
-    }
+    */}
 }
