@@ -1,4 +1,4 @@
-package D6;
+package d6;
 
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.Graph;

@@ -1,8 +1,8 @@
-package D6;
+package d6;
 
 import java.util.regex.Pattern;
 
-import D6.CC;
+import d6.CC;
 import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.SET;
